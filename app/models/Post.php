@@ -43,4 +43,48 @@ class Post extends Database
 
         return false;
     }
+
+    public function getPostById($id)
+    {
+        $this->db->query("SELECT * FROM $this->table WHERE id = :id");
+
+        //Bind Values
+        $this->db->bind(':id', $id);
+
+        return $row = $this->db->single();
+    }
+
+    public function updatePost($data)
+    {
+        $this->db->query("UPDATE $this->table SET title = :title, body = :body WHERE id = :id");
+
+        //Bind Values
+        $this->db->bind(':title', $data['title']);
+        $this->db->bind(':body', $data['body']);
+        $this->db->bind(':id', $data['id']);
+
+
+        //Execute
+        if ($this->db->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function deletePost($id)
+    {
+        $this->db->query("DELETE FROM $this->table WHERE id = :id");
+
+        //Bind Values
+        $this->db->bind(':id', $id);
+
+
+        //Execute
+        if ($this->db->execute()) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -62,4 +62,13 @@ class User extends Database
 
         return false;
     }
+
+    public function getuserById($id)
+    {
+        $this->db->query("select * from $this->table where id = :id");
+        $this->db->bind(':id', $id);
+
+        $row = $this->db->single();
+        return $row;
+    }
 }
